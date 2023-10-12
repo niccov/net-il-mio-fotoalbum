@@ -14,7 +14,8 @@ namespace net_il_mio_fotoalbum.Migrations
                 name: "Categorie",
                 columns: table => new
                 {
-                    Id = table.Column<string>(type: "nvarchar(450)", nullable: false),
+                    Id = table.Column<int>(type: "int", nullable: false)
+                        .Annotation("SqlServer:Identity", "1, 1"),
                     Nome = table.Column<string>(type: "nvarchar(100)", maxLength: 100, nullable: false)
                 },
                 constraints: table =>
@@ -43,7 +44,7 @@ namespace net_il_mio_fotoalbum.Migrations
                 name: "CategoriaFoto",
                 columns: table => new
                 {
-                    CategorieId = table.Column<string>(type: "nvarchar(450)", nullable: false),
+                    CategorieId = table.Column<int>(type: "int", nullable: false),
                     FotosId = table.Column<int>(type: "int", nullable: false)
                 },
                 constraints: table =>

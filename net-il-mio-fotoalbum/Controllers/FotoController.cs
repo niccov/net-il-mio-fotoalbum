@@ -1,6 +1,7 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.SqlServer.Server;
 using net_il_mio_fotoalbum.Database;
 using net_il_mio_fotoalbum.Models;
 using System.Diagnostics;
@@ -98,6 +99,8 @@ namespace net_il_mio_fotoalbum.Controllers
                 FotoToCreate.Descrizione = data.Foto.Descrizione;
                 FotoToCreate.FotoUrl = data.Foto.FotoUrl;
 
+                FotoToCreate.Categorie = new List<Categoria>();
+
 
                 if(data.CategorieSelezionateId != null)
                 {
@@ -114,19 +117,147 @@ namespace net_il_mio_fotoalbum.Controllers
                     }
                 }
 
-                this.SetImageFileFromFormFile(data);
+                this.SetImageFileFromFormFile(data, FotoToCreate);
 
                 db.Fotos.Add(FotoToCreate);
                 db.SaveChanges();
 
                 return RedirectToAction("Index");
             }
-
-
-
         }
 
-        private void SetImageFileFromFormFile(FotoFormModel formData)
+        [HttpGet]
+        public IActionResult Update(int id)
+        {
+            using(FotoContext db = new FotoContext())
+            {
+                Foto? fotoDaModificare = db.Fotos.Where(foto => foto.Id == id).Include(foto => foto.Categorie).FirstOrDefault();
+
+                if(fotoDaModificare == null)
+                {
+                    return NotFound("La foto che vuoi modificare non è stata trovata");
+                }
+                else
+                {
+                    List<SelectListItem> allCategoriesSelectList = new List<SelectListItem>();
+                    List<Categoria> databaseAllCategories = db.Categorie.ToList();
+
+                    foreach (Categoria categoria in databaseAllCategories)
+                    {
+                        allCategoriesSelectList.Add(new SelectListItem
+                        {
+                            Text = categoria.Nome,
+                            Value = categoria.Id.ToString(),
+                            Selected = fotoDaModificare.Categorie.Any(categoriaAssociata => categoriaAssociata.Id == categoria.Id)
+                        });
+                    }
+
+                    FotoFormModel model = new FotoFormModel();
+                    model.Foto = fotoDaModificare;
+                    model.Categorie = allCategoriesSelectList;
+                    return View(model);
+                }
+            }
+        }
+
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public IActionResult Update(int id, FotoFormModel data)
+        {
+            if (!ModelState.IsValid)
+            {
+                using(FotoContext db = new FotoContext())
+                {
+                    List<SelectListItem> allCategoriesSelectList = new List<SelectListItem>();
+                    List<Categoria> databaseAllCategories = db.Categorie.ToList();
+
+                    foreach (Categoria categoria in databaseAllCategories)
+                    {
+                        allCategoriesSelectList.Add(new SelectListItem
+                        {
+                            Text = categoria.Nome,
+                            Value = categoria.Id.ToString()
+                            
+                        });
+                    }
+
+                    data.Categorie = allCategoriesSelectList;
+
+                    return View("Update", data);
+                }
+            }
+
+            using(FotoContext db = new FotoContext())
+            {
+                Foto? fotoDaModificare = db.Fotos.Where(foto => foto.Id == id).Include(foto => foto.Categorie).FirstOrDefault();
+
+                if(fotoDaModificare != null)
+                {
+                    fotoDaModificare.Categorie.Clear();
+
+                    if(data.CategorieSelezionateId != null)
+                    {
+                        foreach (string selectedCategoriesId in data.CategorieSelezionateId)
+                        {
+                            int selectedIntCategoriesId = int.Parse(selectedCategoriesId);
+
+                            Categoria? categoria = db.Categorie.Where(m => m.Id == selectedIntCategoriesId).FirstOrDefault();
+
+                            if(categoria != null)
+                            {
+                                fotoDaModificare.Categorie.Add(categoria);
+                            }
+                        }
+                    }
+
+
+                    fotoDaModificare.Titolo = data.Foto.Titolo;
+                    fotoDaModificare.Descrizione = data.Foto.Descrizione;
+
+                    if(data.FotoFormFile != null)
+                    {
+                        MemoryStream stream = new MemoryStream();
+                        data.FotoFormFile.CopyTo(stream);
+                        fotoDaModificare.FotoFile = stream.ToArray();
+                    }
+
+                    db.SaveChanges();
+
+                    return RedirectToAction("Index");
+                    
+                }
+                else
+                {
+                    return NotFound();
+                }
+            }
+        }
+
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public IActionResult Delete(int id)
+        {
+            using(FotoContext db = new FotoContext())
+            {
+                Foto fotoDaEliminare = db.Fotos.Where(foto => foto.Id == id).FirstOrDefault();
+                if(fotoDaEliminare != null)
+                {
+                    db.Fotos.Remove(fotoDaEliminare);
+                    db.SaveChanges();
+
+                    return RedirectToAction("Index");
+                }
+                else
+                {
+                    return NotFound();
+                }
+            }
+        }
+
+
+
+
+        private void SetImageFileFromFormFile(FotoFormModel formData, Foto foto)
         {
             if(formData.FotoFormFile == null)
             {
@@ -135,7 +266,7 @@ namespace net_il_mio_fotoalbum.Controllers
 
             MemoryStream stream = new MemoryStream();
             formData.FotoFormFile.CopyTo(stream);
-            formData.Foto.FotoFile = stream.ToArray();
+            foto.FotoFile = stream.ToArray();
 
         }
     }

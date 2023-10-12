@@ -47,22 +47,30 @@
                            <p><b>@foto.Descrizione</b></p>
                        </div>
 
-                        @* <div>
-                            @if (foto.Categorie != null)
+                       <div>
+                           <strong>Categorie:</strong>
+
+                            @if (foto.Categorie != null && foto.Categorie.Count > 0)
                             {
-                                <span>@foto.Categorie.Nome</span>
+                                <ul>
+                                    @foreach (Categoria categoria in foto.Categorie)
+                                    {
+                                        <li>@categoria.Nome</li>
+                                    }
+                                </ul>
                             }
                             else
                             {
-                                <span>Nessuna categoria</span>
+                                <span>Non hai ancora categorie associate! </span>
                             }
-                        </div>  *@
 
-                        <div>
+                       </div>
+
+                       <div>
                             <button type="button" class="btn btn-primary">
                                 <a style="color:white"; href="@Url.Action("Details","Foto", new{id=foto.Id})">Dettagli</a>
                             </button>
-                        </div>
+                       </div>
 
                    </div>
                </div>

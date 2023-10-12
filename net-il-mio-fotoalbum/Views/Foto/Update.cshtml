@@ -1,0 +1,52 @@
+﻿@{
+    Layout = "_Layout";
+}
+
+@model FotoFormModel
+
+<div class="container">
+    <form asp-controller="Foto" asp-action="Update" enctype="multipart/form-data" method="post">
+        @Html.AntiForgeryToken()
+        <div class="mb-3">
+            <label asp-for="Foto.Titolo" class="label">Titolo</label>
+            <input type="text" class="form-control" asp-for="Foto.Titolo">    
+        </div>
+
+        <div class="mb-3">
+            <label asp-for="Foto.Descrizione" class="label">Descrizione</label>
+            <input type="text" class="form-control" asp-for="Foto.Descrizione">
+        </div>
+
+        <div class="mb-3">
+            <label asp-for="Foto.FotoUrl" class="label">Foto</label>
+            <input type="text" class="form-control" asp-for="Foto.FotoUrl">
+        </div>
+
+        <div class="mb-3">
+            
+             <label asp-for="FotoFormFile">Image file:</label>
+             <input type="file" asp-for="FotoFormFile" />
+             <span asp-validation-for="FotoFormFile" class="text-error"></span>
+            
+        </div>
+
+        <div class="mb-3">
+            <strong>Ingredienti:</strong>
+            <select asp-for="CategorieSelezionateId"
+                    multiple="multiple"
+                    size="10"
+                    class="label"
+                    asp-items="@Model.Categorie">
+            </select>
+        </div>
+
+        <div class="mb-3">
+            <button type="submit" class="btn btn-primary">Invio</button>
+        </div>
+
+    </form>
+
+    <button type="button" class="btn btn-primary">
+        <a style="color:white" ; href="@Url.Action("Index","Foto")">Torna alle foto</a>
+    </button>
+</div>

@@ -10,7 +10,7 @@ namespace net_il_mio_fotoalbum.Database
 
         protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
         {
-            optionsBuilder.UseSqlServer("Data Source=localhost;Initial Catalog=db-foto;Integrated Security=True;TrustServerCertificate=True");
+            optionsBuilder.UseSqlServer("Data Source=localhost;Initial Catalog=db-album;Integrated Security=True;TrustServerCertificate=True");
         }
     }
 }
