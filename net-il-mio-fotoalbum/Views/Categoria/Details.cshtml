@@ -1,0 +1,38 @@
+﻿@{
+    Layout = "_Layout";
+}
+
+@model Categoria
+
+<div class="container">
+    <div class="row">
+        <div class="col-12">
+            <div class="mx-auto p-2" style="width: 200px;">
+                <h4>@Model.Id</h4>
+            </div>
+        </div>
+    </div>
+
+    <div class="row">
+        <div class="col-12">
+            <div class="mx-auto p-2" style="width: 200px;">
+                <h4>@Model.Nome</h4>
+            </div>
+        </div>
+    </div>
+
+    <div class="button">
+        <div>
+            <button type="button" class="btn btn-primary">
+                <a style="color:white" ; href="@Url.Action("Update","Categoria", new{id=Model.Id})">Modifica</a>
+            </button>
+        </div>
+
+        <div>
+            <form asp-controller="Categoria" asp-action="Delete" asp-route-id="@Model.Id" method="post">
+                @Html.AntiForgeryToken()
+                <button type="submit" style="color: white; background-color: red;">Elimina</button>
+            </form>
+        </div>
+    </div>
+</div>

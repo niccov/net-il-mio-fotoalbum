@@ -1,0 +1,30 @@
+﻿@{
+    Layout = "_Layout";
+}
+
+@model Categoria
+
+<div class="container">  
+
+    <h1>Modifica categoria</h1>
+
+    <form asp-controller="Categoria" asp-action="Update" method="post">
+        @Html.AntiForgeryToken()
+
+        <div class="mb-3">
+            <label asp-for="@Model.Nome" class="label">Inserisci il nuovo nome della categoria:</label>
+            <input type="text" class="form-control" asp-for="@Model.Nome" />
+            <span asp-validation-for="@Model.Nome" class="text-danger"></span>
+        </div>
+
+        <button type="submit" class="btn btn-primary">Invia</button>
+
+    </form>
+
+    <div class="mt-3">
+        <button type="button" class="btn btn-primary">
+            <a style="color:white" ; href="@Url.Action("Index","Categoria")">Torna alle categorie</a>
+        </button>
+    </div>
+
+</div>
