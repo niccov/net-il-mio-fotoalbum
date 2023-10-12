@@ -98,6 +98,7 @@ namespace net_il_mio_fotoalbum.Controllers
                 FotoToCreate.Titolo = data.Foto.Titolo;
                 FotoToCreate.Descrizione = data.Foto.Descrizione;
                 FotoToCreate.FotoUrl = data.Foto.FotoUrl;
+                FotoToCreate.Visibilità = data.Foto.Visibilità;
 
                 FotoToCreate.Categorie = new List<Categoria>();
 
@@ -213,6 +214,7 @@ namespace net_il_mio_fotoalbum.Controllers
 
                     fotoDaModificare.Titolo = data.Foto.Titolo;
                     fotoDaModificare.Descrizione = data.Foto.Descrizione;
+                    fotoDaModificare.Visibilità = data.Foto.Visibilità;
 
                     if(data.FotoFormFile != null)
                     {

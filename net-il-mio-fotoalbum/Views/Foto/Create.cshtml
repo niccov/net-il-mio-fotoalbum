@@ -9,23 +9,35 @@
         @Html.AntiForgeryToken()
         <div class="mb-3">
             <label asp-for="Foto.Titolo" class="label">Titolo</label>
-            <input type="text" class="form-control" asp-for="Foto.Titolo">    
+            <input type="text" class="form-control" asp-for="Foto.Titolo"> 
+            <span asp-validation-for="Foto.Titolo" class="text-danger"></span>
         </div>
 
         <div class="mb-3">
             <label asp-for="Foto.Descrizione" class="label">Descrizione</label>
             <input type="text" class="form-control" asp-for="Foto.Descrizione">
+            <span asp-validation-for="Foto.Descrizione" class="text-danger"></span>
         </div>
 
         <div class="mb-3">
-            <label asp-for="Foto.FotoUrl" class="label">Foto</label>
+            <label asp-for="Foto.FotoUrl" class="label">Foto URL</label>
             <input type="text" class="form-control" asp-for="Foto.FotoUrl">
+            <span asp-validation-for="Foto.FotoUrl" class="text-danger"></span>
         </div>
 
         <div class="mb-3">
             <label asp-for="FotoFormFile">Image file:</label>
             <input type="file" asp-for="FotoFormFile" />
             <span asp-validation-for="FotoFormFile" class="text-error"></span>
+        </div>
+
+        <div class="mb-3">
+            <span>
+                <label asp-for="Foto.Visibilità">Visibilità</label>
+                <span class="ps-2">
+                    <input type="checkbox" asp-for="Foto.Visibilità" />
+                </span>
+            </span>
         </div>
 
         <div class="mb-3">
