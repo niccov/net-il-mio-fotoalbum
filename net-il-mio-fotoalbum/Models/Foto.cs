@@ -26,16 +26,22 @@ namespace net_il_mio_fotoalbum.Models
 
         public byte[]? FotoFile { get; set; }
 
-        public string FotoSrc => FotoFile is null ? (FotoUrl is null ? "" : FotoUrl) : $"data:image/png;base64,{Convert.ToBase64String(FotoFile)}";
+        public string FotoSrc => FotoFile is null ? (FotoUrl is null) ? "" : FotoUrl : $"data:image/png;base64,{Convert.ToBase64String(FotoFile)}";
 
         [Required(ErrorMessage = "La visibilità è obbligatoria")]
         public bool Visibilità {  get; set; }
 
-        public List<Categoria> Categorie {  get; set; }
+        //relazione n:n
+        public List<Categoria>? Categorie {  get; set; }
 
         //costruttore
         public Foto() { }
 
+        public Foto(string titolo, string descrizione)
+        {
+            this.Titolo = titolo;
+            this.Descrizione = descrizione;
+        }
     }
 
 

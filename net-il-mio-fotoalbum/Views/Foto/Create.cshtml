@@ -1,0 +1,43 @@
+﻿@{
+    Layout = "_Layout";
+}
+
+@model FotoFormModel
+
+<div class="container">
+    <form asp-controller="Foto" asp-action="Create" enctype="multipart/form-data" method="post">
+        @Html.AntiForgeryToken()
+        <div class="mb-3">
+            <label asp-for="Foto.Titolo" class="label">Titolo</label>
+            <input type="text" class="form-control" asp-for="Foto.Titolo">    
+        </div>
+
+        <div class="mb-3">
+            <label asp-for="Foto.Descrizione" class="label">Descrizione</label>
+            <input type="text" class="form-control" asp-for="Foto.Descrizione">
+        </div>
+
+        <div class="mb-3">
+            <label asp-for="Foto.FotoUrl" class="label">Foto</label>
+            <input type="text" class="form-control" asp-for="Foto.FotoUrl">
+        </div>
+
+        <div class="mb-3">
+            <label asp-for="FotoFormFile">Image file:</label>
+            <input type="file" asp-for="FotoFormFile" />
+            <span asp-validation-for="FotoFormFile" class="text-error"></span>
+        </div>
+
+        <div class="mb-3">
+            <strong>Seleziona categorie:</strong>
+            <select asp-for="CategorieSelezionateId"
+                     multiple="multiple"
+                     size="10"
+                     class="form-control mb-2 mr-sm-2 ml-sm-3 leftlist"
+                     asp-items="@Model.Categorie">
+            </select>
+        </div>
+
+        <button type="submit" class="btn btn-primary">Invia</button>
+    </form>
+</div>
