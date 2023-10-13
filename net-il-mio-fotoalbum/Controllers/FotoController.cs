@@ -1,4 +1,5 @@
-﻿using Microsoft.AspNetCore.Mvc;
+﻿using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.SqlServer.Server;
@@ -8,6 +9,7 @@ using System.Diagnostics;
 
 namespace net_il_mio_fotoalbum.Controllers
 {
+    [Authorize(Roles = "USER,ADMIN")]
     public class FotoController : Controller
     {
         public IActionResult Index()
@@ -49,6 +51,7 @@ namespace net_il_mio_fotoalbum.Controllers
             }
         }
 
+        [Authorize(Roles = "ADMIN")]
         [HttpGet]
         public IActionResult Create()
         {
@@ -70,6 +73,7 @@ namespace net_il_mio_fotoalbum.Controllers
             
         }
 
+        [Authorize(Roles = "ADMIN")]
         [HttpPost]
         [ValidateAntiForgeryToken]
         public IActionResult Create(FotoFormModel data)
@@ -127,6 +131,7 @@ namespace net_il_mio_fotoalbum.Controllers
             }
         }
 
+        [Authorize(Roles = "ADMIN")]
         [HttpGet]
         public IActionResult Update(int id)
         {
@@ -161,6 +166,7 @@ namespace net_il_mio_fotoalbum.Controllers
             }
         }
 
+        [Authorize(Roles = "ADMIN")]
         [HttpPost]
         [ValidateAntiForgeryToken]
         public IActionResult Update(int id, FotoFormModel data)
@@ -235,6 +241,7 @@ namespace net_il_mio_fotoalbum.Controllers
             }
         }
 
+        [Authorize(Roles = "ADMIN")]
         [HttpPost]
         [ValidateAntiForgeryToken]
         public IActionResult Delete(int id)

@@ -16,19 +16,23 @@
 <body>
 <h1>Lista fotografie</h1>
 
-    <div class="d-flex gap-3">
-        <div class="container mt-4">
-            <button type="button" class="btn btn-primary">
-                <a style="color:white" ; href="@Url.Action("Create","Foto")"><b>Inserisci una foto</b></a>
-            </button>
-        </div>
+    @if (User.IsInRole("ADMIN"))
+    {
+        <div class="d-flex gap-3">
+            <div class="container mt-4">
+                <button type="button" class="btn btn-primary">
+                    <a style="color:white" ; href="@Url.Action("Create","Foto")"><b>Inserisci una foto</b></a>
+                </button>
+            </div>
 
-        <div class="container mt-4">
-            <button type="button" class="btn btn-primary">
-                <a style="color:white" ; href="@Url.Action("Index","Categoria")"><b>Categorie</b></a>
-            </button>
+            <div class="container mt-4">
+                <button type="button" class="btn btn-primary">
+                    <a style="color:white" ; href="@Url.Action("Index","Categoria")"><b>Categorie</b></a>
+                </button>
+            </div>
         </div>
-    </div>
+    }
+
 
 
     @if(Model.Count() == 0)

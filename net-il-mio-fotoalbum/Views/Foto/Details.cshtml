@@ -40,18 +40,21 @@
 
     </div>
 
-    <div>
-        <button type="button" class="btn btn-primary">
-            <a style="color:white" ; href="@Url.Action("Update","Foto", new{id=Model.Id})">Modifica</a>
-        </button>
-
+    @if (User.IsInRole("ADMIN"))
+    {
         <div>
-            <form asp-controller="Foto" asp-action="Delete" asp-route-id="@Model.Id" method="post">
-                @Html.AntiForgeryToken()
-                <button type="submit" style="color: white; background-color: red;" >Elimina</button>
-            </form>
+            <button type="button" class="btn btn-primary">
+                <a style="color:white" ; href="@Url.Action("Update","Foto", new{id=Model.Id})">Modifica</a>
+            </button>
+
+            <div>
+                <form asp-controller="Foto" asp-action="Delete" asp-route-id="@Model.Id" method="post">
+                    @Html.AntiForgeryToken()
+                    <button type="submit" style="color: white; background-color: red;">Elimina</button>
+                </form>
+            </div>
         </div>
-    </div>
+    }
 
     <button type="button" class="btn btn-primary">
         <a style="color:white"; href="@Url.Action("Index","Foto")">Torna alle foto</a>

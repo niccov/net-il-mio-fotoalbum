@@ -1,9 +1,11 @@
-﻿using Microsoft.EntityFrameworkCore;
+﻿using Microsoft.AspNetCore.Identity;
+using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
+using Microsoft.EntityFrameworkCore;
 using net_il_mio_fotoalbum.Models;
 
 namespace net_il_mio_fotoalbum.Database
 {
-    public class FotoContext : DbContext
+    public class FotoContext : IdentityDbContext<IdentityUser>
     {
         public DbSet<Foto> Fotos { get; set; }
         public DbSet<Categoria> Categorie { get; set; }
