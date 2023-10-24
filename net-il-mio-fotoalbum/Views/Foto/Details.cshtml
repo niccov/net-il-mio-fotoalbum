@@ -4,7 +4,7 @@
 
 @model Foto
 
-<div class="container">
+<div class="container d-flex flex-column align-items-center p-4">
     <div class="card-pizza" style="width: 18rem;">
 
         <div class="nome-pizza">
@@ -15,7 +15,7 @@
             <img src="@Model.FotoSrc" class="card-img" alt="...">
         </div>
 
-        <div>
+        <div class="mt-3">
             <strong>Categorie:</strong>
 
             @if (Model.Categorie != null && Model.Categorie.Count > 0)
@@ -42,21 +42,21 @@
 
     @if (User.IsInRole("ADMIN"))
     {
-        <div>
-            <button type="button" class="btn btn-primary">
-                <a style="color:white" ; href="@Url.Action("Update","Foto", new{id=Model.Id})">Modifica</a>
+        <div class="d-flex gap-3">
+            <button type="button" class="btn btn-light">
+                <a href="@Url.Action("Update","Foto", new{id=Model.Id})">Modifica</a>
             </button>
 
             <div>
                 <form asp-controller="Foto" asp-action="Delete" asp-route-id="@Model.Id" method="post">
                     @Html.AntiForgeryToken()
-                    <button type="submit" style="color: white; background-color: red;">Elimina</button>
+                    <button type="submit" class="btn btn-danger">Elimina</button>
                 </form>
             </div>
         </div>
     }
 
-    <button type="button" class="btn btn-primary">
+    <button type="button" class="btn btn-primary mt-3">
         <a style="color:white"; href="@Url.Action("Index","Foto")">Torna alle foto</a>
     </button>
 </div>

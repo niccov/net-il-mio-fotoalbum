@@ -19,7 +19,7 @@ namespace net_il_mio_fotoalbum.Models
         [Column("descrizione")]
         [DefaultValue("")]
         [Required(ErrorMessage = "La descrizione è obbligatoria")]
-        [StringLength(200, ErrorMessage = "La descriz<ione non può avere più di 200 caratteri")]
+        [StringLength(200, ErrorMessage = "La descrizione non può avere più di 200 caratteri")]
         public string? Descrizione { get; set; }
 
         public string? FotoUrl {  get; set; }

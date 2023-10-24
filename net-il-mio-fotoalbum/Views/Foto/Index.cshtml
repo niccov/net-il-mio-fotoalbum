@@ -11,7 +11,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <title>Album Foto</title>
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-T3c6CoIi6uLrA9TneNEoa7RxnatzjcDSCmG1MXxSR1GAsXEV/Dwwykc2MPK8M2HN" crossorigin="anonymous">
-    <link rel="stylesheet" href="~/css/IndexStyle.css" />
+    <link rel="stylesheet" href="~/css/FotoIndexStyle.css" />
 </head>
 <body>
 <h1>Lista fotografie</h1>
@@ -46,46 +46,48 @@
            @foreach (Foto foto in Model)
            {
                <div class="col-4">
-                   <div class="card-pizza" style="width: 18rem;">
+                   <div class="card-container">
+                        <div class="card-foto d-flex flex-column align-items-center">
 
-                       <div class="nome-pizza">
-                           <h4><b>@foto.Titolo</b></h4>
-                       </div>
+                            <div class="titolo-foto">
+                                <h4><b>@foto.Titolo</b></h4>
+                            </div>
 
-                       <div class="container-img-pizza">
-                           <img src="@foto.FotoSrc" class="card-img" alt="...">
-                       </div>
+                            <div class="container-img-foto">
+                                <img src="@foto.FotoSrc" class="card-img-foto" alt="...">
+                            </div>
 
-                       <div class="descrizione-pizza">
-                           <p><b>@foto.Descrizione</b></p>
-                       </div>
+                            <div class="descrizione-foto mt-3">
+                                <p><b>@foto.Descrizione</b></p>
+                            </div>
 
-                       <div>
-                           <strong>Categorie:</strong>
+                            <div>
+                                <strong>Categorie:</strong>
 
-                            @if (foto.Categorie != null && foto.Categorie.Count > 0)
-                            {
-                                <ul>
-                                    @foreach (Categoria categoria in foto.Categorie)
-                                    {
-                                        <li>@categoria.Nome</li>
-                                    }
-                                </ul>
-                            }
-                            else
-                            {
-                                <span>Non hai ancora categorie associate! </span>
-                            }
+                                @if (foto.Categorie != null && foto.Categorie.Count > 0)
+                                {
+                                    <ul>
+                                        @foreach (Categoria categoria in foto.Categorie)
+                                        {
+                                            <li>@categoria.Nome</li>
+                                        }
+                                    </ul>
+                                }
+                                else
+                                {
+                                    <span>Non hai ancora categorie associate! </span>
+                                }
 
-                       </div>
+                            </div>
 
 
-                       <div>
-                            <button type="button" class="btn btn-primary">
-                                <a style="color:white"; href="@Url.Action("Details","Foto", new{id=foto.Id})">Dettagli</a>
-                            </button>
-                       </div>
+                            <div>
+                                <button type="button" class="btn btn-primary">
+                                    <a style="color:white" ; href="@Url.Action("Details","Foto", new{id=foto.Id})">Dettagli</a>
+                                </button>
+                            </div>
 
+                        </div>
                    </div>
                </div>
            }

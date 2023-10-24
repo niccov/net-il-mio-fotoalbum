@@ -7,7 +7,7 @@
 <div class="container">
     <div class="row">
         <div class="col-12">
-            <div class="mx-auto p-2" style="width: 200px;">
+            <div class="text-center p-2">
                 <h4>@Model.Id</h4>
             </div>
         </div>
@@ -15,24 +15,31 @@
 
     <div class="row">
         <div class="col-12">
-            <div class="mx-auto p-2" style="width: 200px;">
+            <div class="text-center p-2">
                 <h4>@Model.Nome</h4>
             </div>
         </div>
     </div>
 
-    <div class="button">
+    <div class="button d-flex justify-content-center align-items-center gap-3 mt-3">
         <div>
-            <button type="button" class="btn btn-primary">
-                <a style="color:white" ; href="@Url.Action("Update","Categoria", new{id=Model.Id})">Modifica</a>
+            <button type="button" class="btn btn-light">
+                <a href="@Url.Action("Update","Categoria", new{id=Model.Id})">Modifica</a>
             </button>
         </div>
 
         <div>
             <form asp-controller="Categoria" asp-action="Delete" asp-route-id="@Model.Id" method="post">
                 @Html.AntiForgeryToken()
-                <button type="submit" style="color: white; background-color: red;">Elimina</button>
+                <button type="submit" class="btn btn-danger">Elimina</button>
             </form>
         </div>
     </div>
+
+    <div class="text-center mt-4">
+        <button type="button" class="btn btn-primary">
+            <a style="color: white;" href="@Url.Action("Index","Categoria")">Torna alle categorie</a>
+        </button> 
+    </div>
+
 </div>
